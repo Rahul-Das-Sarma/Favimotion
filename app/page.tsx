@@ -1,7 +1,17 @@
-import Link from "next/link"
-import { ArrowRight, Check, ChevronRight, Sparkles, Zap, Layers, Palette, RefreshCw } from "lucide-react"
+import Link from "next/link";
+import {
+  ArrowRight,
+  Check,
+  ChevronRight,
+  Sparkles,
+  Zap,
+  Layers,
+  Palette,
+  RefreshCw,
+  ImageIcon,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 export default function LandingPage() {
   return (
@@ -60,7 +70,8 @@ export default function LandingPage() {
                   Bring Your Website to Life with Animated Favicons
                 </h1>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  Create eye-catching, animated favicons in seconds with our AI-powered generator. Stand out from the
+                  Create eye-catching, animated favicons and illustrations in
+                  seconds with our AI-powered generator. Stand out from the
                   crowd and enhance your brand identity.
                 </p>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -87,10 +98,17 @@ export default function LandingPage() {
                   <div className="relative z-10 flex h-full flex-col items-center justify-center rounded-lg bg-white p-6 dark:bg-zinc-950">
                     <div className="mb-4 grid grid-cols-3 gap-4">
                       {[...Array(9)].map((_, i) => (
-                        <div key={i} className="relative h-16 w-16 overflow-hidden rounded-md border bg-muted">
+                        <div
+                          key={i}
+                          className="relative h-16 w-16 overflow-hidden rounded-md border bg-muted"
+                        >
                           <div className="absolute inset-0 flex items-center justify-center">
                             <div
-                              className={`h-10 w-10 rounded-full bg-gradient-to-br from-violet-${(i % 3) * 100 + 300} to-fuchsia-${(i % 3) * 100 + 300} animate-pulse`}
+                              className={`h-10 w-10 rounded-full bg-gradient-to-br from-violet-${
+                                (i % 3) * 100 + 300
+                              } to-fuchsia-${
+                                (i % 3) * 100 + 300
+                              } animate-pulse`}
                               style={{ animationDelay: `${i * 0.1}s` }}
                             ></div>
                           </div>
@@ -123,10 +141,13 @@ export default function LandingPage() {
                 <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
                   Powerful Features
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Create Stunning Animated Favicons</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  Create Stunning Animated Favicons
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Our AI-powered platform makes it easy to create professional animated favicons that capture attention
-                  and enhance your brand.
+                  Our AI-powered platform makes it easy to create professional
+                  animated favicons that capture attention and enhance your
+                  brand.
                 </p>
               </div>
             </div>
@@ -138,17 +159,30 @@ export default function LandingPage() {
                   </div>
                   <h3 className="text-xl font-bold">AI-Powered Generation</h3>
                   <p className="text-muted-foreground">
-                    Describe what you want or upload an image, and our AI will create the perfect animated favicon for
-                    your brand.
+                    Describe what you want or upload an image, and our AI will
+                    create the perfect animated favicon for your brand.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                    <ImageIcon className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold">Custom Illustrations</h3>
+                  <p className="text-muted-foreground">
+                    Generate beautiful illustrations in various styles, similar
+                    to undraw.io, perfect for modern favicons and branding.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                     <Layers className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold">Multiple Animation Styles</h3>
+                  <h3 className="text-xl font-bold">
+                    Multiple Animation Styles
+                  </h3>
                   <p className="text-muted-foreground">
-                    Choose from dozens of animation styles including bounce, pulse, rotate, and custom motion paths.
+                    Choose from dozens of animation styles including bounce,
+                    pulse, rotate, and custom motion paths.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -157,7 +191,8 @@ export default function LandingPage() {
                   </div>
                   <h3 className="text-xl font-bold">Customizable Colors</h3>
                   <p className="text-muted-foreground">
-                    Match your brand colors perfectly with our advanced color customization tools.
+                    Match your brand colors perfectly with our advanced color
+                    customization tools.
                   </p>
                 </div>
               </div>
@@ -168,7 +203,8 @@ export default function LandingPage() {
                   </div>
                   <h3 className="text-xl font-bold">Optimized Performance</h3>
                   <p className="text-muted-foreground">
-                    Our favicons are optimized for performance, ensuring they don't slow down your website.
+                    Our favicons are optimized for performance, ensuring they
+                    don't slow down your website.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -177,7 +213,8 @@ export default function LandingPage() {
                   </div>
                   <h3 className="text-xl font-bold">Multiple Export Formats</h3>
                   <p className="text-muted-foreground">
-                    Export your animated favicon as ICO, PNG sequence, GIF, SVG, or WebP for maximum compatibility.
+                    Export your animated favicon as ICO, PNG sequence, GIF, SVG,
+                    or WebP for maximum compatibility.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -198,9 +235,12 @@ export default function LandingPage() {
                       <path d="m9 12 2 2 4-4" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold">One-Click Implementation</h3>
+                  <h3 className="text-xl font-bold">
+                    One-Click Implementation
+                  </h3>
                   <p className="text-muted-foreground">
-                    Get the code snippet to add your animated favicon to your website with just one click.
+                    Get the code snippet to add your animated favicon to your
+                    website with just one click.
                   </p>
                 </div>
               </div>
@@ -208,14 +248,19 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+        <section
+          id="how-it-works"
+          className="w-full py-12 md:py-24 lg:py-32 bg-muted"
+        >
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
                   Simple Process
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">How It Works</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  How It Works
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Create your animated favicon in three simple steps
                 </p>
@@ -227,7 +272,10 @@ export default function LandingPage() {
                   1
                 </div>
                 <h3 className="text-xl font-bold">Describe or Upload</h3>
-                <p className="text-muted-foreground">Describe what you want or upload your existing logo or icon.</p>
+                <p className="text-muted-foreground">
+                  Describe what you want, choose an illustration style, or
+                  upload your existing logo or icon.
+                </p>
                 <div className="mt-4 rounded-xl border bg-card p-4 shadow-sm">
                   <div className="flex items-center gap-4">
                     <div className="h-12 w-12 rounded-lg bg-muted"></div>
@@ -243,7 +291,10 @@ export default function LandingPage() {
                   2
                 </div>
                 <h3 className="text-xl font-bold">Customize</h3>
-                <p className="text-muted-foreground">Choose animation style, colors, and timing to match your brand.</p>
+                <p className="text-muted-foreground">
+                  Choose animation style, colors, and timing to match your
+                  brand.
+                </p>
                 <div className="mt-4 rounded-xl border bg-card p-4 shadow-sm">
                   <div className="grid grid-cols-2 gap-2">
                     <div className="h-16 rounded-lg bg-muted flex items-center justify-center">
@@ -267,7 +318,8 @@ export default function LandingPage() {
                 </div>
                 <h3 className="text-xl font-bold">Export & Implement</h3>
                 <p className="text-muted-foreground">
-                  Download your favicon and add it to your website with our code snippet.
+                  Download your favicon and add it to your website with our code
+                  snippet.
                 </p>
                 <div className="mt-4 rounded-xl border bg-card p-4 shadow-sm">
                   <div className="space-y-2">
@@ -293,9 +345,12 @@ export default function LandingPage() {
                 <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
                   See It In Action
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Animated Favicon Examples</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  Animated Favicon Examples
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Check out these examples of what you can create with FaviMotion
+                  Check out these examples of what you can create with
+                  FaviMotion
                 </p>
               </div>
             </div>
@@ -307,7 +362,9 @@ export default function LandingPage() {
                 >
                   <div className="aspect-square flex items-center justify-center rounded-lg bg-muted p-4">
                     <div
-                      className={`h-16 w-16 rounded-lg bg-gradient-to-br from-violet-${(i % 3) * 100 + 300} to-fuchsia-${(i % 3) * 100 + 300}`}
+                      className={`h-16 w-16 rounded-lg bg-gradient-to-br from-violet-${
+                        (i % 3) * 100 + 300
+                      } to-fuchsia-${(i % 3) * 100 + 300}`}
                       style={{
                         animation: [
                           "bounce 2s infinite",
@@ -348,14 +405,19 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="pricing" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+        <section
+          id="pricing"
+          className="w-full py-12 md:py-24 lg:py-32 bg-muted"
+        >
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
                   Pricing Plans
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Choose Your Plan</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  Choose Your Plan
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Simple, transparent pricing for everyone
                 </p>
@@ -365,11 +427,15 @@ export default function LandingPage() {
               <div className="flex flex-col rounded-xl border bg-background p-6 shadow-sm">
                 <div className="space-y-2">
                   <h3 className="text-2xl font-bold">Free</h3>
-                  <p className="text-muted-foreground">Perfect for trying out FaviMotion</p>
+                  <p className="text-muted-foreground">
+                    Perfect for trying out FaviMotion
+                  </p>
                 </div>
                 <div className="mt-4 flex items-baseline text-3xl font-bold">
                   $0
-                  <span className="ml-1 text-sm font-normal text-muted-foreground">/month</span>
+                  <span className="ml-1 text-sm font-normal text-muted-foreground">
+                    /month
+                  </span>
                 </div>
                 <ul className="mt-6 space-y-2.5 text-sm">
                   <li className="flex items-center">
@@ -413,11 +479,15 @@ export default function LandingPage() {
                     Most Popular
                   </div>
                   <h3 className="text-2xl font-bold">Pro</h3>
-                  <p className="text-muted-foreground">Perfect for small businesses</p>
+                  <p className="text-muted-foreground">
+                    Perfect for small businesses
+                  </p>
                 </div>
                 <div className="mt-4 flex items-baseline text-3xl font-bold">
                   $9
-                  <span className="ml-1 text-sm font-normal text-muted-foreground">/month</span>
+                  <span className="ml-1 text-sm font-normal text-muted-foreground">
+                    /month
+                  </span>
                 </div>
                 <ul className="mt-6 space-y-2.5 text-sm">
                   <li className="flex items-center">
@@ -444,11 +514,15 @@ export default function LandingPage() {
               <div className="flex flex-col rounded-xl border bg-background p-6 shadow-sm">
                 <div className="space-y-2">
                   <h3 className="text-2xl font-bold">Business</h3>
-                  <p className="text-muted-foreground">Perfect for agencies and teams</p>
+                  <p className="text-muted-foreground">
+                    Perfect for agencies and teams
+                  </p>
                 </div>
                 <div className="mt-4 flex items-baseline text-3xl font-bold">
                   $29
-                  <span className="ml-1 text-sm font-normal text-muted-foreground">/month</span>
+                  <span className="ml-1 text-sm font-normal text-muted-foreground">
+                    /month
+                  </span>
                 </div>
                 <ul className="mt-6 space-y-2.5 text-sm">
                   <li className="flex items-center">
@@ -480,8 +554,12 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">FAQ</div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Frequently Asked Questions</h2>
+                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+                  FAQ
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  Frequently Asked Questions
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Everything you need to know about FaviMotion
                 </p>
@@ -489,45 +567,62 @@ export default function LandingPage() {
             </div>
             <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-2">
               <div className="rounded-lg border p-6">
-                <h3 className="text-lg font-bold">What browsers support animated favicons?</h3>
+                <h3 className="text-lg font-bold">
+                  What browsers support animated favicons?
+                </h3>
                 <p className="mt-2 text-muted-foreground">
-                  Most modern browsers including Chrome, Firefox, Edge, and Safari support animated favicons. Our system
-                  automatically provides fallbacks for browsers with limited support.
+                  Most modern browsers including Chrome, Firefox, Edge, and
+                  Safari support animated favicons. Our system automatically
+                  provides fallbacks for browsers with limited support.
                 </p>
               </div>
               <div className="rounded-lg border p-6">
-                <h3 className="text-lg font-bold">Will animated favicons slow down my website?</h3>
+                <h3 className="text-lg font-bold">
+                  Will animated favicons slow down my website?
+                </h3>
                 <p className="mt-2 text-muted-foreground">
-                  No, our animated favicons are highly optimized for performance. They use minimal resources and won't
-                  impact your website's loading speed.
+                  No, our animated favicons are highly optimized for
+                  performance. They use minimal resources and won't impact your
+                  website's loading speed.
                 </p>
               </div>
               <div className="rounded-lg border p-6">
-                <h3 className="text-lg font-bold">How do I implement the animated favicon on my website?</h3>
+                <h3 className="text-lg font-bold">
+                  How do I implement the animated favicon on my website?
+                </h3>
                 <p className="mt-2 text-muted-foreground">
-                  We provide a simple code snippet that you can add to the head section of your HTML. It's just a few
-                  lines of code, and we provide step-by-step instructions.
+                  We provide a simple code snippet that you can add to the head
+                  section of your HTML. It's just a few lines of code, and we
+                  provide step-by-step instructions.
                 </p>
               </div>
               <div className="rounded-lg border p-6">
-                <h3 className="text-lg font-bold">Can I convert my existing logo into an animated favicon?</h3>
+                <h3 className="text-lg font-bold">
+                  Can I convert my existing logo into an animated favicon?
+                </h3>
                 <p className="mt-2 text-muted-foreground">
-                  Yes! You can upload your existing logo or icon, and our AI will help transform it into an animated
-                  version while preserving your brand identity.
+                  Yes! You can upload your existing logo or icon, and our AI
+                  will help transform it into an animated version while
+                  preserving your brand identity.
                 </p>
               </div>
               <div className="rounded-lg border p-6">
-                <h3 className="text-lg font-bold">Do you offer custom animation styles?</h3>
+                <h3 className="text-lg font-bold">
+                  Do you offer custom animation styles?
+                </h3>
                 <p className="mt-2 text-muted-foreground">
-                  Yes, our Business plan includes custom animation paths and styles. You can also work with our design
-                  team for completely custom animations.
+                  Yes, our Business plan includes custom animation paths and
+                  styles. You can also work with our design team for completely
+                  custom animations.
                 </p>
               </div>
               <div className="rounded-lg border p-6">
-                <h3 className="text-lg font-bold">Can I change my favicon after creating it?</h3>
+                <h3 className="text-lg font-bold">
+                  Can I change my favicon after creating it?
+                </h3>
                 <p className="mt-2 text-muted-foreground">
-                  You can edit your favicons anytime. All your creations are saved in your account for future
-                  modifications.
+                  You can edit your favicons anytime. All your creations are
+                  saved in your account for future modifications.
                 </p>
               </div>
             </div>
@@ -542,7 +637,8 @@ export default function LandingPage() {
                   Ready to Bring Your Website to Life?
                 </h2>
                 <p className="mx-auto max-w-[700px] md:text-xl/relaxed">
-                  Create your first animated favicon in minutes. No design skills required.
+                  Create your first animated favicon in minutes. No design
+                  skills required.
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -571,21 +667,36 @@ export default function LandingPage() {
             <span>FaviMotion</span>
           </div>
           <nav className="flex gap-4 sm:gap-6 md:ml-auto">
-            <Link href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+            <Link
+              href="#features"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground"
+            >
               Features
             </Link>
-            <Link href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+            <Link
+              href="#pricing"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground"
+            >
               Pricing
             </Link>
-            <Link href="#" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+            <Link
+              href="#"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground"
+            >
               Blog
             </Link>
-            <Link href="#" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+            <Link
+              href="#"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground"
+            >
               Contact
             </Link>
           </nav>
           <div className="flex gap-2 md:ml-auto">
-            <Link href="#" className="text-muted-foreground hover:text-foreground">
+            <Link
+              href="#"
+              className="text-muted-foreground hover:text-foreground"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -602,7 +713,10 @@ export default function LandingPage() {
               </svg>
               <span className="sr-only">Twitter</span>
             </Link>
-            <Link href="#" className="text-muted-foreground hover:text-foreground">
+            <Link
+              href="#"
+              className="text-muted-foreground hover:text-foreground"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -621,7 +735,10 @@ export default function LandingPage() {
               </svg>
               <span className="sr-only">Instagram</span>
             </Link>
-            <Link href="#" className="text-muted-foreground hover:text-foreground">
+            <Link
+              href="#"
+              className="text-muted-foreground hover:text-foreground"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -647,5 +764,5 @@ export default function LandingPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

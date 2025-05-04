@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
-import React from "react"
-
-import { useState } from "react"
-import Link from "next/link"
+import React from "react";
+import { useState } from "react";
+import Link from "next/link";
 import {
   ArrowLeft,
   Download,
@@ -27,16 +26,18 @@ import {
   Home,
   Settings,
   User,
-} from "lucide-react"
+  ImageIcon,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Textarea } from "@/components/ui/textarea"
-import { Slider } from "@/components/ui/slider"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { useToast } from "@/hooks/use-toast"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import { Slider } from "@/components/ui/slider";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
 
 // Example queries that users can click on
 const EXAMPLE_QUERIES = [
@@ -48,7 +49,11 @@ const EXAMPLE_QUERIES = [
   "A planet with a moon orbiting around it",
   "A simple heart that beats rhythmically",
   "A music note that gently vibrates",
-]
+  "An illustration of a person working on a laptop",
+  "A minimalist landscape with mountains and sun",
+  "An illustration of a rocket launching to space",
+  "A simple city skyline illustration",
+];
 
 // Animation types available
 const ANIMATION_TYPES = [
@@ -58,7 +63,7 @@ const ANIMATION_TYPES = [
   { id: "ping", name: "Ping", description: "Expands and fades out" },
   { id: "shake", name: "Shake", description: "Shakes side to side" },
   { id: "flip", name: "Flip", description: "Flips horizontally" },
-]
+];
 
 // Previously created favicons
 const PREVIOUS_FAVICONS = [
@@ -69,6 +74,7 @@ const PREVIOUS_FAVICONS = [
     animation: "pulse",
     color: "text-violet-500",
     icon: Mountain,
+    type: "icon",
   },
   {
     id: 2,
@@ -77,6 +83,7 @@ const PREVIOUS_FAVICONS = [
     animation: "bounce",
     color: "text-emerald-500",
     icon: LetterA,
+    type: "icon",
   },
   {
     id: 3,
@@ -85,6 +92,7 @@ const PREVIOUS_FAVICONS = [
     animation: "spin",
     color: "text-orange-500",
     icon: Rocket,
+    type: "icon",
   },
   {
     id: 4,
@@ -110,7 +118,7 @@ const PREVIOUS_FAVICONS = [
     color: "text-indigo-500",
     icon: Globe,
   },
-]
+];
 
 // Available icons for the generator
 const AVAILABLE_ICONS = [
@@ -130,44 +138,131 @@ const AVAILABLE_ICONS = [
   { icon: Bell, name: "Bell" },
   { icon: ShoppingCart, name: "Cart" },
   { icon: Zap, name: "Zap" },
-]
+];
+
+// Available illustrations
+const ILLUSTRATIONS = [
+  {
+    id: "working",
+    name: "Working",
+    description: "Person working on laptop",
+    src: "/illustrations/working.png",
+  },
+  {
+    id: "landscape",
+    name: "Landscape",
+    description: "Mountain landscape",
+    src: "/illustrations/landscape.png",
+  },
+  {
+    id: "rocket-launch",
+    name: "Rocket Launch",
+    description: "Rocket launching to space",
+    src: "/illustrations/rocket-launch.png",
+  },
+  {
+    id: "city",
+    name: "City",
+    description: "City skyline",
+    src: "/illustrations/city.png",
+  },
+  {
+    id: "coding",
+    name: "Coding",
+    description: "Person coding",
+    src: "/illustrations/coding.png",
+  },
+  {
+    id: "meeting",
+    name: "Meeting",
+    description: "Team meeting",
+    src: "/illustrations/meeting.png",
+  },
+  {
+    id: "success",
+    name: "Success",
+    description: "Achievement celebration",
+    src: "/illustrations/success.png",
+  },
+  {
+    id: "data",
+    name: "Data",
+    description: "Data visualization",
+    src: "/illustrations/data.png",
+  },
+];
+
+// Illustration styles
+const ILLUSTRATION_STYLES = [
+  { id: "minimal", name: "Minimal", description: "Clean and simple" },
+  { id: "outlined", name: "Outlined", description: "Line-based illustrations" },
+  { id: "colorful", name: "Colorful", description: "Vibrant and colorful" },
+  { id: "isometric", name: "Isometric", description: "3D isometric style" },
+];
 
 export default function GeneratorPage() {
-  const { toast } = useToast()
-  const [query, setQuery] = useState("")
-  const [isGenerating, setIsGenerating] = useState(false)
+  const { toast } = useToast();
+  const [query, setQuery] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
   const [generatedFavicon, setGeneratedFavicon] = useState<null | {
-    animation: string
-    color: string
-  }>(null)
-  const [selectedAnimation, setSelectedAnimation] = useState("bounce")
-  const [animationSpeed, setAnimationSpeed] = useState(1)
-  const [showCode, setShowCode] = useState(false)
-  const [selectedIcon, setSelectedIcon] = useState(0) // Index of the selected icon
+    animation: string;
+    color: string;
+    type: "icon" | "illustration";
+  }>(null);
+  const [selectedAnimation, setSelectedAnimation] = useState("bounce");
+  const [animationSpeed, setAnimationSpeed] = useState(1);
+  const [showCode, setShowCode] = useState(false);
+  const [selectedIcon, setSelectedIcon] = useState(0); // Index of the selected icon
+  const [selectedIllustration, setSelectedIllustration] = useState(0); // Index of the selected illustration
+  const [selectedIllustrationStyle, setSelectedIllustrationStyle] =
+    useState("minimal");
+  const [activeTab, setActiveTab] = useState<"icon" | "illustration">("icon");
 
   // Function to handle query submission
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!query.trim()) return
+    e.preventDefault();
+    if (!query.trim()) return;
 
-    setIsGenerating(true)
+    setIsGenerating(true);
 
     // Simulate AI generation with a timeout
     setTimeout(() => {
       // In a real implementation, this would call an AI model
-      setGeneratedFavicon({
-        animation: ANIMATION_TYPES[Math.floor(Math.random() * ANIMATION_TYPES.length)].id,
-        color: "text-violet-500",
-      })
-      setSelectedIcon(Math.floor(Math.random() * AVAILABLE_ICONS.length))
-      setIsGenerating(false)
-    }, 2000)
-  }
+      const randomAnimation =
+        ANIMATION_TYPES[Math.floor(Math.random() * ANIMATION_TYPES.length)].id;
+
+      // Determine if we should generate an icon or illustration based on the query
+      const shouldGenerateIllustration =
+        query.toLowerCase().includes("illustration") || Math.random() > 0.5; // 50% chance for illustration for demo purposes
+
+      if (shouldGenerateIllustration) {
+        setActiveTab("illustration");
+        setSelectedIllustration(
+          Math.floor(Math.random() * ILLUSTRATIONS.length)
+        );
+        setGeneratedFavicon({
+          animation: randomAnimation,
+          color: "text-violet-500",
+          type: "illustration",
+        });
+      } else {
+        setActiveTab("icon");
+        setSelectedIcon(Math.floor(Math.random() * AVAILABLE_ICONS.length));
+        setGeneratedFavicon({
+          animation: randomAnimation,
+          color: "text-violet-500",
+          type: "icon",
+        });
+      }
+
+      setIsGenerating(false);
+    }, 2000);
+  };
 
   // Function to handle example query click
   const handleExampleClick = (example: string) => {
-    setQuery(example)
-  }
+    setQuery(example);
+  };
 
   // Function to copy implementation code
   const handleCopyCode = () => {
@@ -182,22 +277,92 @@ export default function GeneratorPage() {
     const favicon = document.querySelector('link[rel="icon"]');
     // Animation logic would be here
   })();
-</script>`
+</script>`;
 
-    navigator.clipboard.writeText(code)
+    navigator.clipboard.writeText(code);
     toast({
       title: "Code copied!",
       description: "The implementation code has been copied to your clipboard.",
-    })
-  }
+    });
+  };
 
   // Function to download the favicon
   const handleDownload = () => {
     toast({
       title: "Favicon downloaded!",
       description: "Your animated favicon has been downloaded.",
-    })
-  }
+    });
+  };
+
+  // Function to get animation style
+  const getAnimationStyle = (animationType: string, speed: number) => {
+    switch (animationType) {
+      case "bounce":
+        return { animation: `bounce ${speed}s infinite` };
+      case "pulse":
+        return { animation: `pulse ${speed}s infinite` };
+      case "spin":
+        return { animation: `spin ${speed}s infinite` };
+      case "ping":
+        return { animation: `ping ${speed}s infinite` };
+      case "shake":
+        return { animation: `shake ${speed}s infinite` };
+      case "flip":
+        return { animation: `flip ${speed}s infinite` };
+      default:
+        return {};
+    }
+  };
+
+  // Function to render the preview based on type (icon or illustration)
+  const renderPreview = () => {
+    if (!generatedFavicon) {
+      return (
+        <div className="text-center text-muted-foreground text-sm">
+          {isGenerating ? (
+            <div className="flex flex-col items-center">
+              <RefreshCw className="h-8 w-8 animate-spin mb-2" />
+              <span>Generating...</span>
+            </div>
+          ) : (
+            <span>Generate a favicon to see preview</span>
+          )}
+        </div>
+      );
+    }
+
+    const animationStyle = getAnimationStyle(selectedAnimation, animationSpeed);
+
+    if (generatedFavicon.type === "icon") {
+      return (
+        <div
+          className="flex items-center justify-center"
+          style={animationStyle}
+        >
+          {React.createElement(AVAILABLE_ICONS[selectedIcon].icon, {
+            className: `w-20 h-20 ${generatedFavicon.color}`,
+          })}
+        </div>
+      );
+    } else {
+      // Illustration preview
+      return (
+        <div
+          className="flex items-center justify-center"
+          style={animationStyle}
+        >
+          <img
+            src={
+              ILLUSTRATIONS[selectedIllustration].src ||
+              "/placeholder.svg?height=96&width=96"
+            }
+            alt={ILLUSTRATIONS[selectedIllustration].name}
+            className="w-24 h-24 object-contain"
+          />
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -223,9 +388,12 @@ export default function GeneratorPage() {
       <main className="flex-1 container py-8">
         <div className="flex flex-col space-y-8">
           <div>
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Favicon Generator</h1>
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              Favicon Generator
+            </h1>
             <p className="mt-2 text-muted-foreground">
-              Describe what you want or choose from examples to create your animated favicon
+              Describe what you want or choose from examples to create your
+              animated favicon or illustration
             </p>
           </div>
 
@@ -234,10 +402,12 @@ export default function GeneratorPage() {
               {/* Query Input Section */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="query">Describe your favicon</Label>
+                  <Label htmlFor="query">
+                    Describe your favicon or illustration
+                  </Label>
                   <Textarea
                     id="query"
-                    placeholder="Describe the favicon you want to create..."
+                    placeholder="Describe what you want to create (e.g., 'A minimalist mountain logo' or 'An illustration of a person working on a laptop')..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     className="min-h-[100px]"
@@ -261,7 +431,9 @@ export default function GeneratorPage() {
               {/* Example Queries */}
               <div className="space-y-2">
                 <h2 className="text-lg font-semibold">Example Queries</h2>
-                <p className="text-sm text-muted-foreground">Click on any example to use it</p>
+                <p className="text-sm text-muted-foreground">
+                  Click on any example to use it
+                </p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {EXAMPLE_QUERIES.map((example, index) => (
                     <Badge
@@ -278,25 +450,27 @@ export default function GeneratorPage() {
 
               {/* Previously Created Favicons */}
               <div className="space-y-4">
-                <h2 className="text-lg font-semibold">Previously Created Favicons</h2>
+                <h2 className="text-lg font-semibold">
+                  Previously Created Favicons & Illustrations
+                </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {PREVIOUS_FAVICONS.map((favicon) => (
                     <Card key={favicon.id} className="overflow-hidden">
                       <CardContent className="p-4">
                         <div className="flex flex-col items-center space-y-2">
                           <div className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center">
-                            <favicon.icon
-                              className={`w-10 h-10 ${favicon.color}`}
-                              style={{
-                                animation: `${favicon.animation} ${
-                                  favicon.animation === "spin" ? "3s" : "2s"
-                                } infinite`,
-                              }}
-                            />
+                            {React.createElement(favicon.icon!, {
+                              className: `w-10 h-10 ${favicon.color}`,
+                              style: getAnimationStyle(favicon.animation, 2),
+                            })}
                           </div>
                           <div className="text-center">
-                            <h3 className="font-medium text-sm">{favicon.name}</h3>
-                            <p className="text-xs text-muted-foreground">{favicon.description}</p>
+                            <h3 className="font-medium text-sm">
+                              {favicon.name}
+                            </h3>
+                            <p className="text-xs text-muted-foreground">
+                              {favicon.description}
+                            </p>
                           </div>
                         </div>
                       </CardContent>
@@ -313,65 +487,150 @@ export default function GeneratorPage() {
                   <div className="flex flex-col items-center space-y-4">
                     <h2 className="text-lg font-semibold">Preview</h2>
                     <div className="w-32 h-32 rounded-lg bg-muted flex items-center justify-center">
-                      {generatedFavicon ? (
-                        <div
-                          className={`flex items-center justify-center`}
-                          style={{
-                            animation: `${selectedAnimation} ${animationSpeed}s infinite`,
-                          }}
-                        >
-                          {React.createElement(AVAILABLE_ICONS[selectedIcon].icon, {
-                            className: `w-20 h-20 ${generatedFavicon.color}`,
-                          })}
-                        </div>
-                      ) : (
-                        <div className="text-center text-muted-foreground text-sm">
-                          {isGenerating ? (
-                            <div className="flex flex-col items-center">
-                              <RefreshCw className="h-8 w-8 animate-spin mb-2" />
-                              <span>Generating...</span>
-                            </div>
-                          ) : (
-                            <span>Generate a favicon to see preview</span>
-                          )}
-                        </div>
-                      )}
+                      {renderPreview()}
                     </div>
 
                     {generatedFavicon && (
                       <div className="w-full space-y-4">
+                        <Tabs
+                          value={activeTab}
+                          onValueChange={(value) =>
+                            setActiveTab(value as "icon" | "illustration")
+                          }
+                          className="w-full"
+                        >
+                          <TabsList className="grid w-full grid-cols-2">
+                            <TabsTrigger
+                              value="icon"
+                              className="flex items-center gap-2"
+                            >
+                              <Zap className="h-4 w-4" />
+                              Icon
+                            </TabsTrigger>
+                            <TabsTrigger
+                              value="illustration"
+                              className="flex items-center gap-2"
+                            >
+                              <ImageIcon className="h-4 w-4" />
+                              Illustration
+                            </TabsTrigger>
+                          </TabsList>
+                          <TabsContent value="icon" className="space-y-4 mt-4">
+                            <div className="space-y-2">
+                              <h3 className="text-sm font-medium">Icon</h3>
+                              <div className="grid grid-cols-4 gap-2 max-h-[120px] overflow-y-auto p-1">
+                                {AVAILABLE_ICONS.map((icon, index) => (
+                                  <Button
+                                    key={index}
+                                    variant={
+                                      selectedIcon === index
+                                        ? "default"
+                                        : "outline"
+                                    }
+                                    size="sm"
+                                    className="h-auto p-2 flex flex-col items-center gap-1"
+                                    onClick={() => setSelectedIcon(index)}
+                                  >
+                                    {React.createElement(icon.icon, {
+                                      className: "h-5 w-5",
+                                    })}
+                                    <span className="text-[10px]">
+                                      {icon.name}
+                                    </span>
+                                  </Button>
+                                ))}
+                              </div>
+                            </div>
+                          </TabsContent>
+                          <TabsContent
+                            value="illustration"
+                            className="space-y-4 mt-4"
+                          >
+                            <div className="space-y-2">
+                              <h3 className="text-sm font-medium">
+                                Illustration Style
+                              </h3>
+                              <div className="grid grid-cols-2 gap-2">
+                                {ILLUSTRATION_STYLES.map((style) => (
+                                  <Button
+                                    key={style.id}
+                                    variant={
+                                      selectedIllustrationStyle === style.id
+                                        ? "default"
+                                        : "outline"
+                                    }
+                                    size="sm"
+                                    className="h-auto py-1 px-2"
+                                    onClick={() =>
+                                      setSelectedIllustrationStyle(style.id)
+                                    }
+                                  >
+                                    <span className="text-xs">
+                                      {style.name}
+                                    </span>
+                                  </Button>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="space-y-2">
+                              <h3 className="text-sm font-medium">
+                                Illustration
+                              </h3>
+                              <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto p-1">
+                                {ILLUSTRATIONS.map((illustration, index) => (
+                                  <Button
+                                    key={index}
+                                    variant={
+                                      selectedIllustration === index
+                                        ? "default"
+                                        : "outline"
+                                    }
+                                    size="sm"
+                                    className="h-auto p-2 flex flex-col items-center gap-1"
+                                    onClick={() =>
+                                      setSelectedIllustration(index)
+                                    }
+                                  >
+                                    <img
+                                      src={
+                                        illustration.src ||
+                                        "/placeholder.svg?height=40&width=40"
+                                      }
+                                      alt={illustration.name}
+                                      className="h-10 w-10 object-contain"
+                                    />
+                                    <span className="text-[10px]">
+                                      {illustration.name}
+                                    </span>
+                                  </Button>
+                                ))}
+                              </div>
+                            </div>
+                          </TabsContent>
+                        </Tabs>
+
                         <div className="space-y-2">
-                          <h3 className="text-sm font-medium">Animation Type</h3>
+                          <h3 className="text-sm font-medium">
+                            Animation Type
+                          </h3>
                           <div className="grid grid-cols-3 gap-2">
                             {ANIMATION_TYPES.map((animation) => (
                               <Button
                                 key={animation.id}
-                                variant={selectedAnimation === animation.id ? "default" : "outline"}
+                                variant={
+                                  selectedAnimation === animation.id
+                                    ? "default"
+                                    : "outline"
+                                }
                                 size="sm"
                                 className="h-auto py-1 px-2"
-                                onClick={() => setSelectedAnimation(animation.id)}
+                                onClick={() =>
+                                  setSelectedAnimation(animation.id)
+                                }
                               >
-                                <span className="text-xs">{animation.name}</span>
-                              </Button>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className="space-y-2">
-                          <h3 className="text-sm font-medium">Icon</h3>
-                          <div className="grid grid-cols-4 gap-2 max-h-[120px] overflow-y-auto p-1">
-                            {AVAILABLE_ICONS.map((icon, index) => (
-                              <Button
-                                key={index}
-                                variant={selectedIcon === index ? "default" : "outline"}
-                                size="sm"
-                                className="h-auto p-2 flex flex-col items-center gap-1"
-                                onClick={() => setSelectedIcon(index)}
-                              >
-                                {React.createElement(icon.icon, {
-                                  className: "h-5 w-5",
-                                })}
-                                <span className="text-[10px]">{icon.name}</span>
+                                <span className="text-xs">
+                                  {animation.name}
+                                </span>
                               </Button>
                             ))}
                           </div>
@@ -380,7 +639,9 @@ export default function GeneratorPage() {
                         <div className="space-y-2">
                           <div className="flex justify-between">
                             <Label htmlFor="speed">Animation Speed</Label>
-                            <span className="text-xs text-muted-foreground">{animationSpeed}s</span>
+                            <span className="text-xs text-muted-foreground">
+                              {animationSpeed}s
+                            </span>
                           </div>
                           <Slider
                             id="speed"
@@ -388,13 +649,21 @@ export default function GeneratorPage() {
                             max={3}
                             step={0.1}
                             value={[animationSpeed]}
-                            onValueChange={(value) => setAnimationSpeed(value[0])}
+                            onValueChange={(value) =>
+                              setAnimationSpeed(value[0])
+                            }
                           />
                         </div>
 
                         <div className="flex items-center space-x-2">
-                          <Switch id="show-code" checked={showCode} onCheckedChange={setShowCode} />
-                          <Label htmlFor="show-code">Show implementation code</Label>
+                          <Switch
+                            id="show-code"
+                            checked={showCode}
+                            onCheckedChange={setShowCode}
+                          />
+                          <Label htmlFor="show-code">
+                            Show implementation code
+                          </Label>
                         </div>
 
                         {showCode && (
@@ -443,15 +712,21 @@ export default function GeneratorPage() {
 
               <Card>
                 <CardContent className="p-6">
-                  <h2 className="text-lg font-semibold mb-2">Tips for Great Favicons</h2>
+                  <h2 className="text-lg font-semibold mb-2">
+                    Tips for Great Favicons
+                  </h2>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start">
                       <Check className="h-4 w-4 text-primary mr-2 mt-0.5" />
-                      <span>Keep it simple and recognizable at small sizes</span>
+                      <span>
+                        Keep it simple and recognizable at small sizes
+                      </span>
                     </li>
                     <li className="flex items-start">
                       <Check className="h-4 w-4 text-primary mr-2 mt-0.5" />
-                      <span>Use subtle animations that don't distract users</span>
+                      <span>
+                        Use subtle animations that don't distract users
+                      </span>
                     </li>
                     <li className="flex items-start">
                       <Check className="h-4 w-4 text-primary mr-2 mt-0.5" />
@@ -471,9 +746,11 @@ export default function GeneratorPage() {
 
       <footer className="w-full border-t bg-background py-6">
         <div className="container flex flex-col items-center justify-center gap-4 text-center">
-          <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} FaviMotion. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} FaviMotion. All rights reserved.
+          </p>
         </div>
       </footer>
     </div>
-  )
+  );
 }
